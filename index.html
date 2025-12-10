@@ -242,7 +242,7 @@ footer{
    ------------------------- */
 const typedEl = document.getElementById('typedText');
 const textLines = [
-  "Nexxar —",
+  "Nexxar",
   "Se eu pudesse encher esta carta com todas as pequenas coisas que penso de você, ainda faltaria espaço.",
   "Você é calma e tempestade, lar e aventura. É quem me acorda com coragem e me acalma com silêncio.",
   "Prometo cuidar dos seus sonhos como se fossem meus, lembrar de cada detalhe e nunca normalizar o cuidado.",
@@ -254,7 +254,7 @@ function startTyping(){
   let li = 0, ci = 0;
   function step(){
     if(li >= textLines.length) {
-      typedEl.innerHTML += '<div style="margin-top:10px;color:#ffdff0">— com amor, Angel</div>';
+      typedEl.innerHTML += '<div style="margin-top:10px;color:#ffdff0">com amor, Angel🩵</div>';
       return;
     }
     const line = textLines[li];
@@ -295,7 +295,7 @@ updateDaysCount();
    ------------------------- */
 function makeHeart(){
   const el = document.createElement('div');
-  el.textContent = '❤';
+  el.textContent = '🤍';
   el.style.position = 'fixed';
   el.style.left = (10 + Math.random()*80) + 'vw';
   el.style.bottom = '-40px';
