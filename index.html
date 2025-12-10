@@ -1,187 +1,622 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Menu Skillet</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Angel → Nexxar = Uma Carta de amor</title>
+<link rel="preload" href="https://files.catbox.moe/7qagl2.jpg" as="image">
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #7a0000, #d40000);
-        color: #fff;
-        display: flex;
-        height: 100vh;
-    }
+  :root{
+    --bg1: #0f1022;
+    --bg2: #2b1432;
+    --accent: #ff7cb2;
+    --accent-2: #9b7cff;
+    --glass: rgba(255,255,255,0.06);
+    --glass-2: rgba(255,255,255,0.04);
+    --muted: rgba(255,255,255,0.75);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(155,124,255,0.12), transparent 10%),
+                radial-gradient(900px 400px at 90% 90%, rgba(255,124,178,0.08), transparent 10%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+    color: #fff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x: hidden;
+  }
 
-    .menu {
-        width: 40%;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+  /* Page container */
+  .wrap{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:2.5rem;
+    position:relative;
+  }
 
-    .titulo {
-        font-size: 42px;
-        font-weight: bold;
-        margin-bottom: 30px;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px #000;
-    }
+  /* subtle starfield */
+  .stars, .stars2, .stars3{
+    pointer-events:none;
+    position:fixed;
+    inset:0;
+    background-repeat:repeat;
+    mix-blend-mode:screen;
+    opacity:0.12;
+  }
+  .stars{background-image:radial-gradient(2px 2px at 10px 10px, #fff 90%, transparent 100%);}
+  .stars2{background-image:radial-gradient(1.2px 1.2px at 50px 40px, #fff 90%, transparent 100%); opacity:0.06}
+  .stars3{background-image:radial-gradient(0.9px 0.9px at 70px 120px, #fff 90%, transparent 100%); opacity:0.04}
 
-    .item {
-        background: rgba(0,0,0,0.30);
-        padding: 15px 20px;
-        margin: 8px 0;
-        border-radius: 10px;
-        font-size: 20px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+  /* envelope overlay */
+  .overlay {
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(180deg, rgba(5,5,10,0.6), rgba(5,5,10,0.8));
+    z-index:40;
+    transition:opacity .8s var(--ease, cubic-bezier(.2,.9,.2,1));
+  }
 
-    .item:hover {
-        background: rgba(0,0,0,0.50);
-        transform: scale(1.03);
-    }
+  /* envelope */
+  .envelope {
+    width:420px;
+    max-width:90vw;
+    height:260px;
+    perspective:1200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .env-box {
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 1s cubic-bezier(.2,.9,.2,1);
+  }
 
-    .right {
-        width: 60%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+  /* back of envelope */
+  .env-back{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 15px 40px rgba(10,6,18,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
 
-    .char-box {
-        width: 80%;
-        height: 85%;
-        background: rgba(255,255,255,0.07);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid rgba(255,255,255,0.15);
-    }
+  /* flap */
+  .flap {
+    position:absolute;
+    left:0; right:0;
+    top:0;
+    height:50%;
+    transform-origin:top center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-top-left-radius:12px;
+    border-top-right-radius:12px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    transition: transform .9s cubic-bezier(.2,.9,.2,1), box-shadow .3s;
+    z-index:5;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:12px;
+  }
+  .seal {
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 20%, #ff9ecb, #ff7cb2 50%, #db5fb0 100%);
+    box-shadow: 0 6px 18px rgba(219,95,176,0.28), inset 0 -6px 12px rgba(255,255,255,0.06);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#fff;
+    letter-spacing:1px;
+    transform:translateY(4px);
+  }
 
-    .char-box p {
-        opacity: 0.6;
-        font-size: 18px;
-    }
+  /* letter inside */
+  .letter {
+    position:absolute;
+    inset:20px 18px 18px 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.04);
+    padding:24px;
+    transform:translateY(30px) rotateX(12deg);
+    transition: transform .9s cubic-bezier(.2,.9,.2,1), opacity .6s;
+    z-index:3;
+    box-shadow: 0 18px 40px rgba(10,6,18,0.6);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+  }
+  .letter h2{
+    font-family: "Georgia", serif;
+    font-size:1.25rem;
+    margin:0;
+    color:var(--accent);
+    text-shadow: 0 2px 14px rgba(155,124,255,0.18);
+  }
+  .letter p{
+    color:var(--muted);
+    text-align:center;
+    font-size:0.98rem;
+    line-height:1.4;
+  }
+  .btn-open{
+    margin-top:6px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    border:none;
+    padding:.55rem 1.1rem;
+    border-radius:999px;
+    box-shadow:0 8px 24px rgba(155,124,255,0.18);
+    color:#0a0312;
+    font-weight:700;
+    cursor:pointer;
+    transform:translateY(2px);
+  }
+
+  /* opened state */
+  .env-open .flap{
+    transform: rotateX(-180deg) translateY(-6px) scale(0.99);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .env-open .env-box{
+    transform: translateY(-24px) rotateX(4deg);
+  }
+  .env-open .letter{
+    transform: translateY(-200px) rotateX(0);
+    opacity:0;
+    pointer-events:none;
+  }
+
+  /* content page (hidden until opened) */
+  .content {
+    width:100%;
+    max-width:1100px;
+    margin:0 auto;
+    padding:2rem;
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:2rem;
+    align-items:start;
+    z-index:10;
+    transform: translateY(30px);
+    opacity:0;
+    transition: all .9s cubic-bezier(.2,.9,.2,1);
+  }
+
+  .content.show {
+    transform: translateY(0);
+    opacity:1;
+  }
+
+  /* Left main card */
+  .main-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border-radius:18px;
+    padding:1.6rem;
+    border:1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 10px 40px rgba(9,6,18,0.6);
+    backdrop-filter: blur(6px);
+    overflow:hidden;
+  }
+
+  .hero-title{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    margin-bottom:6px;
+  }
+  .hero-title .badge{
+    width:68px;height:68px;border-radius:12px;overflow:hidden;flex-shrink:0;
+    box-shadow: 0 8px 30px rgba(255,120,180,0.12);
+    transform: translateZ(0);
+  }
+  .hero-title h1{
+    margin:0;
+    font-size:1.6rem;
+    letter-spacing:0.2px;
+    color:linear-gradient(90deg,#fff,#ffd9ee);
+  }
+  .hero-sub{
+    color: #ffdff0;
+    margin-top:8px;
+    font-size:.95rem;
+  }
+
+  /* typing text */
+  .typed {
+    margin-top:1.1rem;
+    font-size:1.02rem;
+    line-height:1.6;
+    color: #f7e9f3;
+    font-family: "Georgia", serif;
+    min-height:84px;
+  }
+  .typed .cursor{
+    display:inline-block;
+    width:2px;
+    height:1.08em;
+    background:linear-gradient(180deg,var(--accent),var(--accent-2));
+    margin-left:6px;
+    animation: blink 1s steps(2) infinite;
+    vertical-align:middle;
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  /* stats / microcards */
+  .micro-row{display:flex;gap:12px;margin-top:1.5rem;flex-wrap:wrap}
+  .micro{
+    background:var(--glass);
+    padding:.7rem .9rem;
+    border-radius:12px;
+    min-width:120px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .micro strong{display:block;font-size:1.05rem;color:#fff}
+  .micro small{color:#e7d4e7;opacity:0.9}
+
+  /* right column */
+  .side{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .photo-card{
+    border-radius:14px;
+    overflow:hidden;
+    height:420px;
+    border:1px solid rgba(255,255,255,0.04);
+    background:var(--glass-2);
+    box-shadow: 0 10px 30px rgba(10,6,18,0.6);
+    position:relative;
+  }
+  .photo-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform .8s cubic-bezier(.2,.9,.2,1);
+  }
+  .photo-card:hover img{ transform: scale(1.06) rotate(.6deg);}
+
+  .gallery{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:10px;
+  }
+  .thumb{
+    height:90px;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;}
+
+  /* reveal button */
+  .reveal-btn{
+    margin-top:12px;
+    display:inline-block;
+    padding:.6rem 1rem;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:999px;
+    color:#ffdff0;
+    cursor:pointer;
+    transition: all .28s ease;
+  }
+  .reveal-btn:hover{
+    transform:translateY(-3px);
+    box-shadow: 0 8px 24px rgba(155,124,255,0.12);
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  /* footer */
+  footer{
+    margin-top:1.6rem;
+    text-align:center;
+    color:rgba(255,255,255,0.6);
+    font-size:.85rem;
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .content{grid-template-columns:1fr; padding:1.2rem}
+    .side{order:2}
+  }
 </style>
 </head>
 <body>
 
-<div class="menu">
-    <div class="titulo">SKILLET - MENU</div>
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
 
-    <div class="item">MENU BÁSICO</div>
-    <div class="item">MENU DOWN</div>
-    <div class="item">MENU ADM</div>
-    <div class="item">BRINCADEIRAS</div>
-    <div class="item">FERRAMENTAS</div>
-    <div class="item">MENU DONO</div>
-</div>
+<div class="wrap">
 
-<div class="right">
-    <div class="char-box">
-        <p>https://files.catbox.moe/ttooqc.jpg</p>
+  <!-- Envelope overlay: appears on entry -->
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true">
+    <div class="envelope" aria-hidden="false">
+      <div id="env" class="env-box">
+        <div class="env-back"></div>
+        <div class="flap" aria-hidden="true">
+          <div class="seal">A♡N</div>
+        </div>
+
+        <div class="letter" role="document" aria-label="Carta de Angel para Nexxar">
+          <h2>Uma carta — Angel → Nexxar</h2>
+          <p>Quer abrir? Tem segredos, promessas e um coração inteiro guardado aqui.</p>
+          <button id="openBtn" class="btn-open" aria-haspopup="true">Abrir carta</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Main content (hidden until opened) -->
+  <main id="mainContent" class="content" aria-hidden="true">
+
+    <section class="main-card" aria-labelledby="title">
+      <div class="hero-title">
+        <div class="badge" aria-hidden="true">
+          <img src="https://files.catbox.moe/stgdin.jpg" alt="Angel" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div>
+          <h1 id="title">Angel → Nexxar</h1>
+          <div class="hero-sub">Uma carta que virou lar — palavras que não cabiam no peito.</div>
+        </div>
+      </div>
+
+      <div class="typed" id="typedText" aria-live="polite"></div>
+
+      <div class="micro-row" aria-hidden="false">
+        <div class="micro"><strong id="daysCount">—</strong><small>dias juntos</small></div>
+        <div class="micro"><strong>∞</strong><small>promessas</small></div>
+        <div class="micro"><strong>1</strong><small>corpo, dois mundos</small></div>
+      </div>
+
+      <div style="margin-top:1.6rem; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+        <button class="reveal-btn" id="readMore">Ler a carta completa</button>
+        <button class="reveal-btn" id="toggleHearts">❤ Animar corações</button>
+      </div>
+
+      <footer>
+        Carta criada com carinho por Angel — mostre para quem importa ✦
+      </footer>
+    </section>
+
+    <aside class="side" aria-label="Galeria e fotos">
+      <div class="photo-card" aria-hidden="false">
+        <img id="bigPhoto" src="https://files.catbox.moe/bi2y7o.jpg" alt="Memória">
+      </div>
+
+      <div class="gallery">
+        <div class="thumb"><img src="https://files.catbox.moe/e6u6mb.jpg" alt=""></div>
+        <div class="thumb"><img src="https://files.catbox.moe/tpfsz6.jpg" alt=""></div>
+        <div class="thumb"><img src="https://files.catbox.moe/meitsr.jpg" alt=""></div>
+        <div class="thumb"><img src="https://files.catbox.moe/u3xqfk.jpg" alt=""></div>
+      </div>
+    </aside>
+
+  </main>
+
 </div>
 
+<!-- Floating hearts container -->
+<div id="heartsRoot" aria-hidden="true"></div>
+
+<script>
+/* -------------------------
+   Envelope open flow
+   ------------------------- */
+const overlay = document.getElementById('overlay');
+const env = document.getElementById('env');
+const openBtn = document.getElementById('openBtn');
+const mainContent = document.getElementById('mainContent');
+const typedEl = document.getElementById('typedText');
+const daysCount = document.getElementById('daysCount');
+const heartsRoot = document.getElementById('heartsRoot');
+let heartsOn = false;
+
+function openEnvelope() {
+  env.classList.add('env-open');
+  overlay.style.opacity = '0';
+  overlay.style.pointerEvents = 'none';
+  setTimeout(()=> {
+    overlay.style.display = 'none';
+    revealContent();
+  }, 900);
+}
+
+openBtn.addEventListener('click', openEnvelope);
+
+/* open also by clicking envelope or pressing Enter/Escape */
+overlay.addEventListener('click', (e)=>{
+  if(e.target === overlay) openEnvelope();
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' || e.key === ' ') openEnvelope();
+});
+
+/* reveal entire content */
+function revealContent() {
+  mainContent.classList.add('show');
+  mainContent.setAttribute('aria-hidden','false');
+  startTyping();
+  updateDaysCount();
+  startSubtleParticles();
+}
+
+/* -------------------------
+   Typing effect
+   ------------------------- */
+const textLines = [
+  "Nexxar —",
+  "Se eu pudesse encher esta carta com todas as pequenas coisas que penso de você, ainda faltaria espaço.",
+  "Você é calma e tempestade, lar e aventura. É quem me acorda com coragem e me acalma com silêncio.",
+  "Prometo cuidar dos seus sonhos como se fossem meus, lembrar de cada detalhe e nunca normalizar o cuidado.",
+  "Essa carta é só um começo. Leve-a no bolso, leia à noite, sorria e saiba: você tem meu mundo."
+];
+
+function startTyping(){
+  typedEl.innerHTML = '';
+  let li = 0, ci = 0;
+  function step(){
+    if(li >= textLines.length) {
+      typedEl.innerHTML += '<div style="margin-top:10px;color:#ffdff0">— com amor, Angel</div>';
+      return;
+    }
+    const line = textLines[li];
+    typedEl.innerHTML = typedEl.innerHTML.replace('<span class="cursor"></span>','');
+    if(ci < line.length){
+      typedEl.innerHTML += line.charAt(ci);
+      ci++;
+      typedEl.innerHTML += '<span class="cursor"></span>';
+      setTimeout(step, 28 + Math.random()*40);
+    } else {
+      // end of line
+      li++;
+      ci = 0;
+      typedEl.innerHTML = typedEl.innerHTML.replace('<span class="cursor"></span>','');
+      typedEl.innerHTML += '<br/>';
+      setTimeout(step, 400);
+    }
+  }
+  step();
+}
+
+/* -------------------------
+   Days counter (customize start date here)
+   ------------------------- */
+const startDate = new Date("2025-11-12T00:00:00"); // ajuste conforme precisar
+function updateDaysCount(){
+  const now = new Date();
+  const diff = now - startDate;
+  const days = Math.floor(diff / (1000*60*60*24));
+  daysCount.textContent = days >= 0 ? days : 0;
+}
+setInterval(updateDaysCount, 1000*60*10); // atualiza a cada 10 minutos
+
+/* -------------------------
+   Hearts animation toggle
+   ------------------------- */
+function makeHeart(){
+  const el = document.createElement('div');
+  el.textContent = '❤';
+  el.style.position = 'fixed';
+  el.style.left = (10 + Math.random()*80) + 'vw';
+  el.style.bottom = '-40px';
+  el.style.fontSize = (12 + Math.random()*28) + 'px';
+  el.style.opacity = 0.95;
+  el.style.pointerEvents = 'none';
+  el.style.transition = 'transform 6s linear, opacity 1s linear';
+  heartsRoot.appendChild(el);
+  requestAnimationFrame(()=> {
+    el.style.transform = `translateY(-120vh) rotate(${(Math.random()*60)-30}deg)`;
+  });
+  setTimeout(()=> {
+    el.style.opacity = '0';
+    setTimeout(()=> el.remove(), 1000);
+  }, 6000);
+}
+let heartInterval = null;
+document.getElementById('toggleHearts').addEventListener('click', ()=>{
+  heartsOn = !heartsOn;
+  if(heartsOn){
+    heartInterval = setInterval(makeHeart, 450);
+    document.getElementById('toggleHearts').textContent = '❤ Pausar corações';
+  } else {
+    clearInterval(heartInterval);
+    document.getElementById('toggleHearts').textContent = '❤ Animar corações';
+  }
+});
+
+/* auto-open envelope after a short delay for smoother UX */
+window.addEventListener('load', ()=> {
+  // small page-intro delay
+  setTimeout(()=> {
+    // keep overlay visible first; only slightly auto-open for visitors
+    // If user prefers to click, they can; automatic open improves reveal for mobile too
+    openEnvelope();
+  }, 900);
+});
+
+/* -------------------------
+   Subtle floating particles (decorative)
+   ------------------------- */
+function startSubtleParticles(){
+  // create a few shimmering blobs in the background to give depth
+  for(let i=0;i<6;i++){
+    const b = document.createElement('div');
+    b.style.position='fixed';
+    b.style.width = (120 + Math.random()*220) + 'px';
+    b.style.height = (120 + Math.random()*220) + 'px';
+    b.style.borderRadius = '50%';
+    b.style.filter = 'blur(40px)';
+    b.style.opacity = (0.04 + Math.random()*0.06);
+    b.style.left = (Math.random()*90) + 'vw';
+    b.style.top = (Math.random()*80) + 'vh';
+    b.style.pointerEvents = 'none';
+    b.style.zIndex = 1;
+    b.style.background = `radial-gradient(circle at 30% 30%, rgba(155,124,255,0.28), rgba(255,124,178,0.06) 40%, transparent 60%)`;
+    document.body.appendChild(b);
+    // gentle float animation
+    const dx = (Math.random()*40)-20;
+    const dy = (Math.random()*40)-20;
+    b.animate([
+      { transform: 'translate(0,0)'},
+      { transform: `translate(${dx}px,${dy}px)`},
+      { transform: 'translate(0,0)'}
+    ], { duration: 8000 + Math.random()*7000, iterations: Infinity, easing: 'ease-in-out' });
+  }
+}
+
+/* -------------------------
+   Gallery interactions
+   ------------------------- */
+const thumbs = document.querySelectorAll('.thumb img');
+const bigPhoto = document.getElementById('bigPhoto');
+thumbs.forEach(t => {
+  t.addEventListener('click', ()=> {
+    bigPhoto.src = t.src;
+    bigPhoto.animate([{ transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 420, easing:'ease-out' });
+  });
+});
+
+/* -------------------------
+   Accessibility: focus on open button
+   ------------------------- */
+openBtn.focus();
+
+/* -------------------------
+   Small performance: remove overlay from DOM later
+   ------------------------- */
+setTimeout(()=> {
+  // cleanup overlay after user has had chance to open
+  if(overlay && overlay.parentNode) {
+    // do not remove immediately; keep semantics but we already hide it on open
+  }
+}, 8000);
+
+</script>
 </body>
-</html><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Menu Skillet</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #7a0000, #d40000);
-        color: #fff;
-        display: flex;
-        height: 100vh;
-    }
-
-    .menu {
-        width: 40%;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .titulo {
-        font-size: 42px;
-        font-weight: bold;
-        margin-bottom: 30px;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px #000;
-    }
-
-    .item {
-        background: rgba(0,0,0,0.30);
-        padding: 15px 20px;
-        margin: 8px 0;
-        border-radius: 10px;
-        font-size: 20px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .item:hover {
-        background: rgba(0,0,0,0.50);
-        transform: scale(1.03);
-    }
-
-    .right {
-        width: 60%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    .char-box {
-        width: 80%;
-        height: 85%;
-        background: rgba(255,255,255,0.07);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid rgba(255,255,255,0.15);
-    }
-
-    .char-box p {
-        opacity: 0.6;
-        font-size: 18px;
-    }
-</style>
-</head>
-<body>
-
-<div class="menu">
-    <div class="titulo">SKILLET - MENU</div>
-
-    <div class="item">MENU BÁSICO</div>
-    <div class="item">MENU DOWN</div>
-    <div class="item">MENU ADM</div>
-    <div class="item">BRINCADEIRAS</div>
-    <div class="item">FERRAMENTAS</div>
-    <div class="item">MENU DONO</div>
-</div>
-
-<div class="right">
-    <div class="char-box">
-        <p>IMG-20251128-WA0309.jpg</p>
-    </div>
-</div>
-
-</body>
-</html>
+                                                                                        </html>
