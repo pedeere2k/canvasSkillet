@@ -368,26 +368,8 @@
 
 <div class="wrap">
 
-  <!-- Envelope overlay: appears on entry -->
-  <div id="overlay" class="overlay" role="dialog" aria-modal="true">
-    <div class="envelope" aria-hidden="false">
-      <div id="env" class="env-box">
-        <div class="env-back"></div>
-        <div class="flap" aria-hidden="true">
-          <div class="seal">A♡N</div>
-        </div>
-
-        <div class="letter" role="document" aria-label="Carta de Angel para Nexxar">
-          <h2>Uma carta — Angel → Nexxar</h2>
-          <p>Quer abrir? Tem segredos, promessas e um coração inteiro guardado aqui.</p>
-          <button id="openBtn" class="btn-open" aria-haspopup="true">Abrir carta</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Main content (hidden until opened) -->
-  <main id="mainContent" class="content" aria-hidden="true">
+  <main id="mainContent" class="content" aria-hidden="false">
 
     <section class="main-card" aria-labelledby="title">
       <div class="hero-title">
@@ -396,7 +378,7 @@
         </div>
         <div>
           <h1 id="title">Angel → Nexxar</h1>
-          <div class="hero-sub">Uma carta que virou lar — palavras que não cabiam no peito.</div>
+          <div class="hero-sub">entre todos amores e amigos, você sempre foi e vai ser meu preferido 🤍</div>
         </div>
       </div>
 
@@ -405,16 +387,10 @@
       <div class="micro-row" aria-hidden="false">
         <div class="micro"><strong id="daysCount">—</strong><small>dias juntos</small></div>
         <div class="micro"><strong>∞</strong><small>promessas</small></div>
-        <div class="micro"><strong>1</strong><small>corpo, dois mundos</small></div>
-      </div>
-
-      <div style="margin-top:1.6rem; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
-        <button class="reveal-btn" id="readMore">Ler a carta completa</button>
-        <button class="reveal-btn" id="toggleHearts">❤ Animar corações</button>
       </div>
 
       <footer>
-        Carta criada com carinho por Angel — mostre para quem importa ✦
+        De Angel Para Nexxar Com todo Meu amor 
       </footer>
     </section>
 
@@ -444,7 +420,6 @@
    ------------------------- */
 const overlay = document.getElementById('overlay');
 const env = document.getElementById('env');
-const openBtn = document.getElementById('openBtn');
 const mainContent = document.getElementById('mainContent');
 const typedEl = document.getElementById('typedText');
 const daysCount = document.getElementById('daysCount');
@@ -461,7 +436,6 @@ function openEnvelope() {
   }, 900);
 }
 
-openBtn.addEventListener('click', openEnvelope);
 
 /* open also by clicking envelope or pressing Enter/Escape */
 overlay.addEventListener('click', (e)=>{
@@ -625,7 +599,6 @@ thumbs.forEach(t => {
 /* -------------------------
    Accessibility: focus on open button
    ------------------------- */
-openBtn.focus();
 
 /* -------------------------
    Small performance: remove overlay from DOM later
