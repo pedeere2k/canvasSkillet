@@ -29,7 +29,6 @@
     overflow-x: hidden;
   }
 
-  /* Page container */
   .wrap{
     min-height:100vh;
     display:flex;
@@ -39,7 +38,6 @@
     position:relative;
   }
 
-  /* subtle starfield */
   .stars, .stars2, .stars3{
     pointer-events:none;
     position:fixed;
@@ -52,142 +50,6 @@
   .stars2{background-image:radial-gradient(1.2px 1.2px at 50px 40px, #fff 90%, transparent 100%); opacity:0.06}
   .stars3{background-image:radial-gradient(0.9px 0.9px at 70px 120px, #fff 90%, transparent 100%); opacity:0.04}
 
-  /* envelope overlay */
-  .overlay {
-    position:fixed;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: linear-gradient(180deg, rgba(5,5,10,0.6), rgba(5,5,10,0.8));
-    z-index:40;
-    transition:opacity .8s var(--ease, cubic-bezier(.2,.9,.2,1));
-  }
-
-  /* envelope */
-  .envelope {
-    width:420px;
-    max-width:90vw;
-    height:260px;
-    perspective:1200px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .env-box {
-    width:100%;
-    height:100%;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:transform 1s cubic-bezier(.2,.9,.2,1);
-  }
-
-  /* back of envelope */
-  .env-back{
-    position:absolute;
-    inset:0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 15px 40px rgba(10,6,18,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  /* flap */
-  .flap {
-    position:absolute;
-    left:0; right:0;
-    top:0;
-    height:50%;
-    transform-origin:top center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-top-left-radius:12px;
-    border-top-right-radius:12px;
-    border-bottom:1px solid rgba(255,255,255,0.04);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-    transition: transform .9s cubic-bezier(.2,.9,.2,1), box-shadow .3s;
-    z-index:5;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    padding-bottom:12px;
-  }
-  .seal {
-    width:64px;
-    height:64px;
-    border-radius:50%;
-    background: radial-gradient(circle at 30% 20%, #ff9ecb, #ff7cb2 50%, #db5fb0 100%);
-    box-shadow: 0 6px 18px rgba(219,95,176,0.28), inset 0 -6px 12px rgba(255,255,255,0.06);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:700;
-    color:#fff;
-    letter-spacing:1px;
-    transform:translateY(4px);
-  }
-
-  /* letter inside */
-  .letter {
-    position:absolute;
-    inset:20px 18px 18px 18px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.04);
-    padding:24px;
-    transform:translateY(30px) rotateX(12deg);
-    transition: transform .9s cubic-bezier(.2,.9,.2,1), opacity .6s;
-    z-index:3;
-    box-shadow: 0 18px 40px rgba(10,6,18,0.6);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:14px;
-  }
-  .letter h2{
-    font-family: "Georgia", serif;
-    font-size:1.25rem;
-    margin:0;
-    color:var(--accent);
-    text-shadow: 0 2px 14px rgba(155,124,255,0.18);
-  }
-  .letter p{
-    color:var(--muted);
-    text-align:center;
-    font-size:0.98rem;
-    line-height:1.4;
-  }
-  .btn-open{
-    margin-top:6px;
-    background:linear-gradient(90deg,var(--accent),var(--accent-2));
-    border:none;
-    padding:.55rem 1.1rem;
-    border-radius:999px;
-    box-shadow:0 8px 24px rgba(155,124,255,0.18);
-    color:#0a0312;
-    font-weight:700;
-    cursor:pointer;
-    transform:translateY(2px);
-  }
-
-  /* opened state */
-  .env-open .flap{
-    transform: rotateX(-180deg) translateY(-6px) scale(0.99);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  }
-  .env-open .env-box{
-    transform: translateY(-24px) rotateX(4deg);
-  }
-  .env-open .letter{
-    transform: translateY(-200px) rotateX(0);
-    opacity:0;
-    pointer-events:none;
-  }
-
-  /* content page (hidden until opened) */
   .content {
     width:100%;
     max-width:1100px;
@@ -198,17 +60,10 @@
     gap:2rem;
     align-items:start;
     z-index:10;
-    transform: translateY(30px);
-    opacity:0;
-    transition: all .9s cubic-bezier(.2,.9,.2,1);
-  }
-
-  .content.show {
     transform: translateY(0);
     opacity:1;
   }
 
-  /* Left main card */
   .main-card{
     background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
     border-radius:18px;
@@ -234,7 +89,6 @@
     margin:0;
     font-size:1.6rem;
     letter-spacing:0.2px;
-    color:linear-gradient(90deg,#fff,#ffd9ee);
   }
   .hero-sub{
     color: #ffdff0;
@@ -242,7 +96,6 @@
     font-size:.95rem;
   }
 
-  /* typing text */
   .typed {
     margin-top:1.1rem;
     font-size:1.02rem;
@@ -262,7 +115,6 @@
   }
   @keyframes blink{50%{opacity:0}}
 
-  /* stats / microcards */
   .micro-row{display:flex;gap:12px;margin-top:1.5rem;flex-wrap:wrap}
   .micro{
     background:var(--glass);
@@ -275,14 +127,12 @@
   .micro strong{display:block;font-size:1.05rem;color:#fff}
   .micro small{color:#e7d4e7;opacity:0.9}
 
-  /* right column */
   .side{
     display:flex;
     flex-direction:column;
     gap:14px;
   }
 
-/* ---- FOTO PRINCIPAL / PHOTO-CARD ---- */
 .photo-card img{
     width: 100%;
     height: 100%;
@@ -299,8 +149,6 @@
     box-shadow: 0 12px 32px rgba(0,0,0,0.4);
 }
 
-
-/* ---- THUMBNAILS ---- */
 .gallery{
     display:grid;
     grid-template-columns: repeat(2,1fr);
@@ -325,39 +173,17 @@
     transform: scale(1.06) rotate(.6deg);
 }
 
-
-
-  /* reveal button */
-  .reveal-btn{
-    margin-top:12px;
-    display:inline-block;
-    padding:.6rem 1rem;
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:999px;
-    color:#ffdff0;
-    cursor:pointer;
-    transition: all .28s ease;
-  }
-  .reveal-btn:hover{
-    transform:translateY(-3px);
-    box-shadow: 0 8px 24px rgba(155,124,255,0.12);
-    border-color: rgba(255,255,255,0.12);
-  }
-
-  /* footer */
-  footer{
+footer{
     margin-top:1.6rem;
     text-align:center;
     color:rgba(255,255,255,0.6);
     font-size:.85rem;
   }
 
-  /* responsive */
-  @media (max-width:980px){
+@media (max-width:980px){
     .content{grid-template-columns:1fr; padding:1.2rem}
     .side{order:2}
-  }
+}
 </style>
 </head>
 <body>
@@ -368,42 +194,39 @@
 
 <div class="wrap">
 
-  <!-- Main content (hidden until opened) -->
-  <main id="mainContent" class="content" aria-hidden="false">
+  <main id="mainContent" class="content">
 
-    <section class="main-card" aria-labelledby="title">
+    <section class="main-card">
       <div class="hero-title">
-        <div class="badge" aria-hidden="true">
+        <div class="badge">
           <img src="https://files.catbox.moe/stgdin.jpg" alt="Angel" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div>
-          <h1 id="title">Angel → Nexxar</h1>
+          <h1>Angel → Nexxar</h1>
           <div class="hero-sub">entre todos amores e amigos, você sempre foi e vai ser meu preferido 🤍</div>
         </div>
       </div>
 
-      <div class="typed" id="typedText" aria-live="polite"></div>
+      <div class="typed" id="typedText"></div>
 
-      <div class="micro-row" aria-hidden="false">
+      <div class="micro-row">
         <div class="micro"><strong id="daysCount">—</strong><small>dias juntos</small></div>
         <div class="micro"><strong>∞</strong><small>promessas</small></div>
       </div>
 
-      <footer>
-        De Angel Para Nexxar Com todo Meu amor 
-      </footer>
+      <footer>De Angel Para Nexxar Com todo Meu amor</footer>
     </section>
 
-    <aside class="side" aria-label="Galeria e fotos">
-      <div class="photo-card" aria-hidden="false">
+    <aside class="side">
+      <div class="photo-card">
         <img id="bigPhoto" src="https://files.catbox.moe/stgdin.jpg" alt="Memória">
       </div>
 
       <div class="gallery">
-        <div class="thumb"><img src="https://files.catbox.moe/e6u6mb.jpg" alt=""></div>
-        <div class="thumb"><img src="https://files.catbox.moe/tpfsz6.jpg" alt=""></div>
-        <div class="thumb"><img src="https://files.catbox.moe/meitsr.jpg" alt=""></div>
-        <div class="thumb"><img src="https://files.catbox.moe/u3xqfk.jpg" alt=""></div>
+        <div class="thumb"><img src="https://files.catbox.moe/e6u6mb.jpg"></div>
+        <div class="thumb"><img src="https://files.catbox.moe/tpfsz6.jpg"></div>
+        <div class="thumb"><img src="https://files.catbox.moe/meitsr.jpg"></div>
+        <div class="thumb"><img src="https://files.catbox.moe/u3xqfk.jpg"></div>
       </div>
     </aside>
 
@@ -411,52 +234,13 @@
 
 </div>
 
-<!-- Floating hearts container -->
-<div id="heartsRoot" aria-hidden="true"></div>
+<div id="heartsRoot"></div>
 
 <script>
 /* -------------------------
-   Envelope open flow
-   ------------------------- */
-const overlay = document.getElementById('overlay');
-const env = document.getElementById('env');
-const mainContent = document.getElementById('mainContent');
-const typedEl = document.getElementById('typedText');
-const daysCount = document.getElementById('daysCount');
-const heartsRoot = document.getElementById('heartsRoot');
-let heartsOn = false;
-
-function openEnvelope() {
-  env.classList.add('env-open');
-  overlay.style.opacity = '0';
-  overlay.style.pointerEvents = 'none';
-  setTimeout(()=> {
-    overlay.style.display = 'none';
-    revealContent();
-  }, 900);
-}
-
-
-/* open also by clicking envelope or pressing Enter/Escape */
-overlay.addEventListener('click', (e)=>{
-  if(e.target === overlay) openEnvelope();
-});
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter' || e.key === ' ') openEnvelope();
-});
-
-/* reveal entire content */
-function revealContent() {
-  mainContent.classList.add('show');
-  mainContent.setAttribute('aria-hidden','false');
-  startTyping();
-  updateDaysCount();
-  startSubtleParticles();
-}
-
-/* -------------------------
    Typing effect
    ------------------------- */
+const typedEl = document.getElementById('typedText');
 const textLines = [
   "Nexxar —",
   "Se eu pudesse encher esta carta com todas as pequenas coisas que penso de você, ainda faltaria espaço.",
@@ -481,7 +265,6 @@ function startTyping(){
       typedEl.innerHTML += '<span class="cursor"></span>';
       setTimeout(step, 28 + Math.random()*40);
     } else {
-      // end of line
       li++;
       ci = 0;
       typedEl.innerHTML = typedEl.innerHTML.replace('<span class="cursor"></span>','');
@@ -493,19 +276,22 @@ function startTyping(){
 }
 
 /* -------------------------
-   Days counter (customize start date here)
+   Days counter
    ------------------------- */
-const startDate = new Date("2025-11-12T00:00:00"); // ajuste conforme precisar
+const daysCount = document.getElementById('daysCount');
+const startDate = new Date("2025-11-12T00:00:00");
+
 function updateDaysCount(){
   const now = new Date();
   const diff = now - startDate;
   const days = Math.floor(diff / (1000*60*60*24));
   daysCount.textContent = days >= 0 ? days : 0;
 }
-setInterval(updateDaysCount, 1000*60*10); // atualiza a cada 10 minutos
+setInterval(updateDaysCount, 1000*60*10);
+updateDaysCount();
 
 /* -------------------------
-   Hearts animation toggle
+   Floating hearts
    ------------------------- */
 function makeHeart(){
   const el = document.createElement('div');
@@ -517,7 +303,7 @@ function makeHeart(){
   el.style.opacity = 0.95;
   el.style.pointerEvents = 'none';
   el.style.transition = 'transform 6s linear, opacity 1s linear';
-  heartsRoot.appendChild(el);
+  document.getElementById('heartsRoot').appendChild(el);
   requestAnimationFrame(()=> {
     el.style.transform = `translateY(-120vh) rotate(${(Math.random()*60)-30}deg)`;
   });
@@ -526,90 +312,26 @@ function makeHeart(){
     setTimeout(()=> el.remove(), 1000);
   }, 6000);
 }
-let heartInterval = null;
-document.getElementById('toggleHearts').addEventListener('click', ()=>{
-  heartsOn = !heartsOn;
-  if(heartsOn){
-    heartInterval = setInterval(makeHeart, 450);
-    document.getElementById('toggleHearts').textContent = '❤ Pausar corações';
-  } else {
-    clearInterval(heartInterval);
-    document.getElementById('toggleHearts').textContent = '❤ Animar corações';
-  }
-});
-
-/* auto-open envelope after a short delay for smoother UX */
-window.addEventListener('load', ()=> {
-  // small page-intro delay
-  setTimeout(()=> {
-    // keep overlay visible first; only slightly auto-open for visitors
-    // If user prefers to click, they can; automatic open improves reveal for mobile too
-    openEnvelope();
-  }, 900);
-});
+setInterval(makeHeart, 650);
 
 /* -------------------------
-   Subtle floating particles (decorative)
-   ------------------------- */
-function startSubtleParticles(){
-  // create a few shimmering blobs in the background to give depth
-  for(let i=0;i<6;i++){
-    const b = document.createElement('div');
-    b.style.position='fixed';
-    b.style.width = (120 + Math.random()*220) + 'px';
-    b.style.height = (120 + Math.random()*220) + 'px';
-    b.style.borderRadius = '50%';
-    b.style.filter = 'blur(40px)';
-    b.style.opacity = (0.04 + Math.random()*0.06);
-    b.style.left = (Math.random()*90) + 'vw';
-    b.style.top = (Math.random()*80) + 'vh';
-    b.style.pointerEvents = 'none';
-    b.style.zIndex = 1;
-    b.style.background = `radial-gradient(circle at 30% 30%, rgba(155,124,255,0.28), rgba(255,124,178,0.06) 40%, transparent 60%)`;
-    document.body.appendChild(b);
-    // gentle float animation
-    const dx = (Math.random()*40)-20;
-    const dy = (Math.random()*40)-20;
-    b.animate([
-      { transform: 'translate(0,0)'},
-      { transform: `translate(${dx}px,${dy}px)`},
-      { transform: 'translate(0,0)'}
-    ], { duration: 8000 + Math.random()*7000, iterations: Infinity, easing: 'ease-in-out' });
-  }
-}
-
-/* -------------------------
-   Gallery interactions
+   Thumbnails
    ------------------------- */
 const thumbs = document.querySelectorAll('.thumb img');
 const bigPhoto = document.getElementById('bigPhoto');
 thumbs.forEach(t => {
   t.addEventListener('click', () => {
     bigPhoto.src = t.src;
-    bigPhoto.animate(
-      [
-        { transform: 'scale(.96)' },
-        { transform: 'scale(1)' }
-      ],
-      { duration: 420, easing: 'ease-out' }
-    );
+    bigPhoto.animate([{ transform:'scale(.96)' },{ transform:'scale(1)' }],{
+      duration:420,
+      easing:'ease-out'
+    });
   });
 });
 
-/* -------------------------
-   Accessibility: focus on open button
-   ------------------------- */
-
-/* -------------------------
-   Small performance: remove overlay from DOM later
-   ------------------------- */
-setTimeout(()=> {
-  // cleanup overlay after user has had chance to open
-  if(overlay && overlay.parentNode) {
-    // do not remove immediately; keep semantics but we already hide it on open
-  }
-}, 8000);
-
+/* start typing on load */
+window.onload = startTyping;
 </script>
+
 </body>
 </html>
