@@ -277,17 +277,19 @@ function startTyping(){
 /* -------------------------
    Days counter
    ------------------------- */
-const daysCount = document.getElementById('daysCount');
-const startDate = new Date("2025-10-1T00:00:00");
-
-function updateDaysCount(){
-  const now = new Date();
-  const diff = now - startDate;
-  const days = Math.floor(diff / (1000*60*60*24));
-  daysCount.textContent = days >= 0 ? days : 0;
-}
-setInterval(updateDaysCount, 1000*60*10);
-updateDaysCount();
+const dataInicio = new Date("2025-10-12T00:00:00");
+    setInterval(() => {
+      const agora = new Date();
+      const diff = agora - dataInicio;
+      const anos = agora.getFullYear() - dataInicio.getFullYear();
+      const meses = agora.getMonth() - dataInicio.getMonth();
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = agora.getHours() - dataInicio.getHours();
+      const minutos = agora.getMinutes() - dataInicio.getMinutes();
+      const segundos = agora.getSeconds() - dataInicio.getSeconds();
+      document.getElementById("contador").innerText =
+        `${anos} anos, ${meses} meses, ${dias % 30} dias, ${horas}h ${minutos}m ${segundos}s`;
+    }, 1000);
 
 /* -------------------------
    Floating hearts
